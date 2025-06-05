@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -12,137 +12,177 @@
             font-family: Arial, sans-serif;
         }
 
-        #logo {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 180px;
-            background: white;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #ececec, #ffffff); /* soft background */
+  padding: 20px 10px;
+  margin-bottom: 5px;
+  border-bottom: 2px solid #ccc;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
 
-            #logo img {
-                max-height: 90%;
-                max-width: 90%;
-                object-fit: contain;
-            }
+.logo-container img {
+  height: 250px; /* Adjustable */
+  width: auto;
+  max-width: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+  transition: transform 0.3s ease;
+}
 
-        #print-logo {
-            display: none;
-            height: 180px;
-            margin-bottom: 20px;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.logo-container img:hover {
+  transform: scale(1.03);
+}
 
-            #print-logo img {
-                max-height: 90%;
-                max-width: 90%;
-                object-fit: contain;
-            }
-
-        .screen-only {
+   #print-logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+      .screen-only {
             display: block;
         }
 
         .print-only {
             display: none;
         }
+#mainLayout {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    gap: 30px; /* Space between sidebar and preview */
+}
 
-        #controlsContainer {
-            padding-top: 200px;
-            background-color: #9C6753;
-            z-index: 0;
-        }
+#controlsContainer {
+    flex: 0 0 340px; /* wider */
+    height: 85vh;    /* taller */
+    overflow-y: auto;
+    padding: 14px 20px 14px 14px;
+    background-color: #9C6753;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
 
-        select {
-            margin: 20px;
-            padding: 8px;
-            font-size: 16px;
-        }
 
-        img.preview {
-            width: 400px;
-            margin-top: 20px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+select, button {
+    width: 95%; /* same width for both */
+    margin: 12px auto; /* 12px top/bottom margin, auto left/right centers */
+    padding: 10px;     /* consistent padding */
+    font-size: 15px;   /* consistent font size */
+    font-weight: bold;
+    background-color: #eee;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: block;
+}
+
+
+
+button:hover {
+    background-color: #ddd;
+}
+
+
+    
+       img.preview {
+    width: 90%;
+    max-width: 500px;
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
         hr {
             width: 60%;
             margin: 30px auto;
         }
 
-        button {
-            margin: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-
+        
         #imageContainer {
             min-height: 200px;
             margin-bottom: 40px;
         }
+        
+      @media print {
+          
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin: 0;
+        counter-reset: page;
+    }
 
-        @media print {
-            body {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                margin: 0;
-                counter-reset: page;
-            }
+         .print-only {
+        display: block !important;
+    }
 
-            #controlsContainer, select, button {
-                display: none !important;
-            }
+    .screen-only,
+    #logo,
+    #controlsContainer,
+    select,
+    button {
+        display: none !important;
+    }
 
-            .screen-only {
-                display: none !important;
-            }
+   #print-logo {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px; /* Or more, like 250px */
+    margin-bottom: 20px;
+    background: white;
+}
 
-            .print-only {
-                display: block !important;
-            }
+    .print-only + * {
+        page-break-before: avoid;
+    }
 
-            #print-logo {
-                page-break-after: avoid;
-            }
+    img.preview {
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 auto 20px auto !important;
+        page-break-inside: avoid;
+    }
 
-            .print-only + * {
-                page-break-before: avoid;
-            }
+    .image-wrapper {
+        display: block;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 40px;
+    }
 
-            img.preview {
-                width: 100% !important;
-                height: auto !important;
-                margin: 0 auto 20px auto !important;
-                page-break-inside: avoid;
-            }
+    html {
+        counter-reset: pages;
+    }
 
-            body::after {
-                content: "Page " counter(page);
-                position: fixed;
-                bottom: 10mm;
-                left: 0;
-                right: 0;
-                text-align: center;
-                font-size: 12px;
-                color: black;
-            }
+    body::after {
+        content: "Page " counter(page);
+        position: fixed;
+        bottom: 10mm;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 12px;
+        color: black;
+    }
 
-            @page {
-                size: A4 portrait;
-                margin: 10mm 15mm 15mm 15mm;
-            }
-        }
+    @page {
+        size: A4 portrait;
+        margin: 10mm 5mm 15mm 5mm;
+    }
+}
         .image-wrapper {
             page-break-inside: avoid;
             break-inside: avoid;
@@ -155,7 +195,46 @@
                 break-inside: avoid;
             }
         }
+        @media (max-width: 768px) {
+  #mainLayout {
+    flex-direction: column;
+    padding: 10px;
+  }
+ select, button {
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+  #controlsContainer {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
 
+#imageContainer {
+    flex: 1;
+    min-width: 0;
+    min-height: 200px;
+    margin-bottom: 40px;
+}
+
+
+details {
+  width: 100%;
+  background-color: #fdfdfd;
+  border-radius: 4px;
+  padding: 8px;
+}
+summary {
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+.sortable-ghost {
+    opacity: 0.4;
+    border: 2px dashed #ccc;
+}
 
     </style>
     <script>
@@ -166,23 +245,32 @@
         document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px;'>Access Denied</h2>";
     }
 </script>
+    
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    
 </head>
 <body>
-    <!-- Screen logo -->
-    <div id="logo" class="screen-only">
-        <img src="logo.png" alt="Company Logo" />
-    </div>
+ <!-- Print-only logo -->
+<div id="print-logo" class="print-only">
+    <img src="logo.png" alt="Company Logo" />
+</div>
 
-    <!-- Print logo for first page -->
-    <div id="print-logo" class="print-only">
-        <img src="logo.png" alt="Company Logo" />
-    </div>
+<!-- Screen logo -->
+<div class="logo-container screen-only">
+  <img src="logo.png" alt="Logo" />
+</div>
 
+ <!-- Main layout container: this holds both sidebar and preview -->
+<div id="mainLayout">
     <div id="controlsContainer">
+        <!-- ✅ Paste all your real <select> and <button> elements here ONLY -->
+   
         
-         <select onchange="addImage(this.value)">
-            <option value="">-- Select Lumbar Image --</option>
+  <details open>
+  <summary>Lumbar</summary>
+  <select onchange="addImage(this.value)">
+    <option value="">-- Select Lumbar Image --</option>
              <option value="Backpress.jpg">Back Press</option>
              <option value="Bridge.jpg">Bridge</option>
              <option value="bridgewpillow.jpg">Bridge with Pillow</option>
@@ -206,10 +294,13 @@
              <option value="torsotwist.jpg">Torso Twist</option>        
             
         </select>    
+  </details>
 
         
-        <select onchange="addImage(this.value)">
-          <option value="">-- Select Cervical & Thoracic Image --</option>
+        <details open>
+ <summary>Cervical & Thoracic</summary>
+  <select onchange="addImage(this.value)">
+    <option value="">-- Select Cervical & Thoracic --</option>
             <option value="Abdominalbreathing.jpg">Abdominal Breathing</option>
             <option value="bilatarmglidewall.jpg">Bilateral Wall Glide</option>
             <option value="chintuck.jpg">Chintuck</option>
@@ -224,15 +315,18 @@
             <option value="standingtrapezius.jpg">Standing Trapezius</option>
             <option value="trapeziusstretch.jpg">Trapezius Stretch</option>
             <option value="thoricspineroller.jpg">Thoricspine Roller</option>
-            <option value="threadtheneedle.jpg">Threat the needle</option>
+            <option value="threadtheneedle.jpg">Thread the needle</option>
             <option value="ulnarnervestretch.jpg">Ulnar Nerve Stretch</option>
            
             
         </select>        
+            </details>
 
         
-        <select onchange="addImage(this.value)">
-             <option value="">-- Select Knee / Leg Image --</option>
+        <details open>
+ <summary>Knee & Leg</summary>
+  <select onchange="addImage(this.value)">
+    <option value="">-- Select Knee & Leg Image --</option>
                 <option value="anklestretchwithtowel.jpg">Ankle Stretch with Towel</option>
                 <option value="assistedbentknee.jpg">Assisted Knee Bend</option>
                 <option value="footglideinchair.jpg">Foot Glide in Chair</option>
@@ -251,9 +345,12 @@
                 <option value="wallsquat.jpg">Wall Squat</option>
            
         </select>
+            </details>
         
-        <select onchange="addImage(this.value)">
-             <option value="">-- Select Ankle Image --</option>
+        <details open>
+   <summary>Ankle</summary>
+  <select onchange="addImage(this.value)">
+    <option value="">-- Select Ankle Image --</option>
             <option value="ankleeversionrb.jpg">Ankle Eversion with Resistance-band</option>
             <option value="balletjie.jpg">Balletjie</option>
             <option value="calfaisesonstairs.jpg">Calf Raises on Stairs</option>
@@ -262,7 +359,7 @@
             <option value="heelraisedlunge.jpg">Heel Raised Lunge</option>
             <option value="heeltoeraise.jpg">Heel-Toe Raise</option>
             <option value="isolatedtoelift.jpg">Isolated Toe Lift</option>
-            <option value="iliopsoasleglift.jpg">Iliopsoas Leg Lif</option>
+            <option value="iliopsoasleglift.jpg">Iliopsoas Leg Lift</option>
             <option value="onelegstand.jpg">One Leg Stand</option>        
             <option value="SoleusStretch.jpg">Soleus Stretch</option>
             <option value="standingkneeraise.jpg">Standing Knee Raises</option>     
@@ -273,9 +370,12 @@
             
             
         </select>
+            </details>
         
-        <select onchange="addImage(this.value)">
-            <option value="">-- Select Shoulder Image --</option>
+        <details open>
+ <summary>Shoulder</summary>
+  <select onchange="addImage(this.value)">
+    <option value="">-- Select Shoulder Image --</option>
                 <option value="crossbodyshoulderstretch.jpg">Cross-body Shoulder Stretch</option>
                 <option value="doorstretch.jpg">Door Stretch</option>
                 <option value="externalrotationresistance.jpg">External Rotation Resistance</option>
@@ -303,10 +403,13 @@
             
             
         </select>
+            </details>
 
-        <select onchange="addImage(this.value)">
-            <option value="">-- Select Hip Image --</option>
-             <option value="abductionwithband.jpg">Abduction with Resistance-bandk</option>
+        <details open>
+  <summary>Hip</summary>
+  <select onchange="addImage(this.value)">
+    <option value="">-- Select Hip Image --</option>
+             <option value="abductionwithband.jpg">Abduction with Resistance-band</option>
              <option value="bentlegsidekick.jpg">Bent Leg Side-kick</option>
              <option value="hipextentionsclamstyle.jpg">Hip Extentions Clamstyle</option>
              <option value="hipextentionsstreightleg.jpg">Hip Extentions Straightleg</option>
@@ -315,36 +418,77 @@
             
             
         </select>
-       
+            </details>
 
         <button onclick="window.print()">Print</button>
+        <button onclick="clearImages()">Clear All</button>
+
     </div>
 
     <div id="imageContainer"></div>
-
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script>
-        function addImage(src) {
-            if (!src) return;
+   
+function addImage(src) {
+    if (!src) return;
 
-            const imageContainer = document.getElementById("imageContainer");
+    const imageContainer = document.getElementById("imageContainer");
 
-            // Add horizontal line if any image already exists
-            const wrapper = document.createElement("div");
-            wrapper.className = "image-wrapper";
+    // Prevent duplicates
+    const existingImages = imageContainer.querySelectorAll("img.preview");
+    for (const img of existingImages) {
+        if (img.src.includes(src)) return;
+    }
 
-            if (imageContainer.children.length > 0) {
-                const hr = document.createElement("hr");
-                wrapper.appendChild(hr);
-            }
+    const wrapper = document.createElement("div");
+    wrapper.className = "image-wrapper";
 
-            const img = document.createElement("img");
-            img.src = src;
-            img.className = "preview";
-            wrapper.appendChild(img);
+    if (imageContainer.children.length > 0) {
+        const hr = document.createElement("hr");
+        wrapper.appendChild(hr);
+    }
 
-            imageContainer.appendChild(wrapper);
+    const img = document.createElement("img");
+img.src = src;
+img.className = "preview";
 
-        }
-    </script>
+// Create readable alt text from the filename (e.g., "Backpress.jpg" → "Backpress")
+const altText = src
+  .split('.')[0]
+  .replace(/([a-z])([A-Z])/g, '$1 $2') // camelCase split
+  .replace(/[_-]/g, ' ')               // underscore/dash to space
+  .replace(/\b\w/g, char => char.toUpperCase()); // Capitalize each word
+
+
+img.alt = altText;
+wrapper.appendChild(img);
+
+
+    imageContainer.appendChild(wrapper);
+}
+
+function clearImages() {
+    document.getElementById("imageContainer").innerHTML = '';
+}
+
+// Initialize Sortable ONCE
+new Sortable(document.getElementById("imageContainer"), {
+    animation: 150,
+    handle: ".preview",
+    ghostClass: "sortable-ghost"
+});
+
+// Enable click-to-remove functionality
+document.getElementById("imageContainer").addEventListener("click", function (e) {
+    if (e.target.tagName === "IMG") {
+        e.target.closest(".image-wrapper").remove();
+    }
+});
+
+</script>
+
+
+
 </body>
 </html>
